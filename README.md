@@ -3,7 +3,7 @@ Frogger - Classic Arcade Game
 
 ## Installation
 
-After downloading the game from [github](https://github.com/sami-almalki), you just need to open `index.html` in your browser, and the game will start!
+After downloading the game from [github](https://github.com/sami-almalki/frontend-nanodegree-arcade-game), you just need to open `index.html` in your browser, and the game will start!
 
 ## Game Instructions
 

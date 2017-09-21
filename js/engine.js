@@ -9,7 +9,7 @@
  * drawn but that is not the case. What's really happening is the entire "scene"
  * is being drawn over and over, presenting the illusion of animation.
  *
- * This engine makes the canvas' context (ctx) object globally available to make 
+ * This engine makes the canvas' context (ctx) object globally available to make
  * writing app.js a little simpler to work with.
  */
 
@@ -43,9 +43,14 @@ var Engine = (function(global) {
 
         /* Call our update/render functions, pass along the time delta to
          * our update function since it may be used for smooth animation.
+         * In case the game is over, end the game and display titles.
          */
-        update(dt);
-        render();
+        if (!gameOver) {
+            update(dt);
+            render();
+        } else {
+            setTimeout(function(){ reset(); }, 1000);
+        }
 
         /* Set our lastTime variable which is used to determine the time delta
          * for the next time this function is called.
@@ -151,6 +156,23 @@ var Engine = (function(global) {
         });
 
         player.render();
+
+        // Call a function to render the game score and player lives
+        renderScoreLives();
+    }
+
+    /* This function renders the game score and player lives */
+    function renderScoreLives() {
+        // Update the score
+        ctx.font = '30px Lobster';
+        ctx.fillStyle = 'white';
+        ctx.fillText("Score: " + player.score, 10, 100);
+
+        // Update the lives
+        ctx.drawImage(Resources.get(player.sprite), 445, 37, 50, 84);
+        ctx.font = '30px Lobster';
+        ctx.fillStyle = 'white';
+        ctx.fillText(player.lives, 430, 100);
     }
 
     /* This function does nothing but it could have been a good place to
@@ -158,7 +180,43 @@ var Engine = (function(global) {
      * those sorts of things. It's only called once by the init() method.
      */
     function reset() {
-        // noop
+        if (gameOver) {
+            var gameOverTitles = new Image();
+            gameOverTitles.src = 'images/game-over.png';
+            ctx.drawImage(gameOverTitles, 0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
+
+            ctx.font = '60px Lobster';
+            ctx.textAlign = 'center';
+            ctx.fillStyle = '#404042';
+            ctx.fillText(bestScore, 250, 565);
+
+            ctx.font = '30px Lobster';
+            ctx.fillStyle = 'white';
+            ctx.fillText('Press any key to restart!', 250, 410);
+
+            document.addEventListener('keyup', pressAnyKey);
+        } else {
+            document.removeEventListener('keyup', pressAnyKey);
+            canvas.width = canvas.width;
+            bestScore = 0;
+            player.score = 0;
+            player.lives = 5;
+            player.x = (CANVAS_WIDTH/2)-(OBJECTS_WIDTH/2);
+            player.y = CANVAS_HEIGHT-OBJECTS_HEIGHT-(OBJECTS_HEIGHT/4);
+            allEnemies.forEach(function(enemy) {
+                enemy.x = ENEMY_X[Math.floor(Math.random() * 4)];
+                enemy.y = ENEMY_Y[Math.floor(Math.random() * 3)];
+                enemy.speed = Math.floor(Math.random() * (200 - 70)) + 70;
+            });
+        }
+    }
+
+    /* Listen for any key press to restart the game */
+    function pressAnyKey(e) {
+        if (e.keyCode) {
+            gameOver = false;
+            reset();
+        }
     }
 
     /* Go ahead and load all of the images we know we're going to need to

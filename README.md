@@ -1,6 +1,17 @@
-frontend-nanodegree-arcade-game
+Frogger - Classic Arcade Game
 ===============================
 
-Students should use this [rubric](https://review.udacity.com/#!/projects/2696458597/rubric) for self-checking their submission. Make sure the functions you write are **object-oriented** - either class functions (like Player and Enemy) or class prototype functions such as Enemy.prototype.checkCollisions, and that the keyword 'this' is used appropriately within your class and class prototype functions to refer to the object the function is called upon. Also be sure that the **readme.md** file is updated with your instructions on both how to 1. Run and 2. Play your arcade game.
+## Installation
 
-For detailed instructions on how to get started, check out this [guide](https://docs.google.com/document/d/1v01aScPjSWCCWQLIpFqvg3-vXLH2e8_SZQKC8jNO0Dc/pub?embedded=true).
+After downloading the game from [github](https://github.com/sami-almalki), you just need to open `index.html` in your browser, and the game will start!
+
+## Game Instructions
+
+* You have to move the player from the grass to the sea, crossing the sidewalk, and to avoid hitting any of those crazy bugs!
+* When you move the player successfully to the sea, you get 100 points.
+* If you hit any of the bugs, you return back to the starting point and you lose 1 live (you have 5 lives).
+* Try your best to have a great score!
+
+## License
+
+`Frogger - Classic Arcade Game` is made by **Sami Almalki** as a project in the Front-End Web Developer Nanodegree Program at [Udacity](https://www.udacity.com/course/front-end-web-developer-nanodegree--nd001). Feel free to use this simple game and distribute it as you want.
